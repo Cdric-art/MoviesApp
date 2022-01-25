@@ -10,7 +10,7 @@ export const globalStyles = globalCss({
   },
   body: {
     fontFamily: "Source sans pro",
-    backgroundColor: "$blue100",
+    backgroundColor: "$blue50",
     color: "$white",
     lineHeight: 1.5,
     webkitFontSmoothing: "antialiased",
@@ -38,20 +38,24 @@ export const globalStyles = globalCss({
   },
   a: {
     textDecoration: "none",
-    color: "inherit",
+    color: "inherit,
   },
   ul: {
     listStyle: "none",
     padding: 0,
-    margin: 0,
+    margin: ,
+  },
+  svg: {
+    width: 24,
+    height: 2,
   },
   "::-webkit-scrollbar": {
     width: 4,
-    height: 5,
+    height: ,
   },
   "::-webkit-scrollbar-track": {
     background: "$gray50",
-    padding: 1,
+    padding: ,
   },
   "::-webkit-scrollbar-thumb": {
     background: "$contrast",

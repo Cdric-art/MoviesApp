@@ -39,8 +39,7 @@ const Nav = styled("nav", {
   },
 
   "a:hover, .active": {
-    backgroundColor: "$blue50",
-    color: "$blue25",
+    backgroundColor: "$blue25",
   },
 });
 

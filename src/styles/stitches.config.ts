@@ -3,11 +3,11 @@ import { createStitches } from "@stitches/react";
 export const { styled, globalCss } = createStitches({
   theme: {
     colors: {
-      white: "rgb(238, 238, 238)",
-      gray: "rgb(100, 100, 100)",
-      blue25: "#546fe4",
-      blue50: "#212040",
-      blue100: "#060d2c",
+      white: "hsl(0, 0%, 93%)",
+      gray: "hsl(0, 0%, 39%)",
+      blue25: "hsl(229, 73%, 61%)",
+      blue50: "hsl(242, 33%, 19%)",
+      blue100: "hsl(229, 76%, 10%)",
     },
     fonts: {
       "*": "Source sans pro",
