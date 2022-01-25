@@ -43,6 +43,7 @@ export const globalStyles = globalCss({
   ul: {
     listStyle: "none",
     padding: 0,
+    margin: 0,
   },
   "::-webkit-scrollbar": {
     width: 4,
