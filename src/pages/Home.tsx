@@ -1,13 +1,13 @@
 import React from "react";
 import { Header } from "../components/Header";
-import { Search } from "../components/Search";
+import { Movies } from "../components/Movies";
 import { Container } from "../styles/components/Container";
 
 export const Home = () => {
   return (
     <Container>
       <Header />
-      <Search />
+      <Movies />
     </Container>
   );
 };

@@ -3,31 +3,47 @@ import { Container } from "../styles/components/Container";
 import { Flex } from "../styles/components/Flex";
 import { styled } from "../styles/stitches.config";
 import { FlopButton, TopButton } from "./Buttons";
-import { useFetchSearch } from "./useFetch";
+import { useFetchMovie, useFetchSearch } from "./useFetch";
 import { Movie } from "../types/movie";
 import { MovieItem } from "./MovieItem";
 
-export const Search = () => {
+export const Movies = () => {
   const formRef = useRef<HTMLFormElement | null>(null);
 
   const [moviesData, setMoviesData] = useState<Movie[]>([]);
+  const [searchQuery, setSearchQuery] = useState<FormDataEntryValue | null>(
+    null
+  );
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(formRef.current);
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+      setSearchQuery(formData.get("search"));
+    }
   };
 
   useEffect(() => {
-    useFetchSearch("avenger").then((response) => {
-      setMoviesData(response.results);
-    });
-  }, []);
+    if (searchQuery) {
+      useFetchSearch(searchQuery).then((response) => {
+        setMoviesData(response.results);
+      });
+    } else {
+      useFetchMovie().then((response) => {
+        setMoviesData(response.results);
+      });
+    }
+  }, [searchQuery]);
 
   return (
     <Container position={"center"}>
       <div>
         <Form ref={formRef} onSubmit={handleSubmit}>
-          <input type="text" placeholder={"Entrez le titre d'un film"} />
+          <input
+            name="search"
+            type="text"
+            placeholder={"Entrez le titre d'un film"}
+          />
           <button type={"submit"}>Rechercher</button>
         </Form>
       </div>
@@ -85,7 +101,6 @@ const Wrapper = styled("div", {
   display: "grid",
   gridTemplateColumns: "repeat(auto-fill, 250px)",
   justifyContent: "center",
-  alignItems: "flex-start",
   width: "100%",
   gridGap: "$space4",
   marginTop: "$space8",

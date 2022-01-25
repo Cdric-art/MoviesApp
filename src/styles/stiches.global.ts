@@ -38,27 +38,27 @@ export const globalStyles = globalCss({
   },
   a: {
     textDecoration: "none",
-    color: "inherit,
+    color: "inherit",
   },
   ul: {
     listStyle: "none",
     padding: 0,
-    margin: ,
+    margin: 0,
   },
   svg: {
     width: 24,
-    height: 2,
+    height: 24,
   },
   "::-webkit-scrollbar": {
     width: 4,
-    height: ,
+    height: 7,
   },
   "::-webkit-scrollbar-track": {
-    background: "$gray50",
-    padding: ,
+    background: "$white",
+    padding: "$space1",
   },
   "::-webkit-scrollbar-thumb": {
-    background: "$contrast",
+    background: "$blue25",
     borderRadius: 4,
   },
   "::selection": {

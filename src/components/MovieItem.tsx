@@ -162,7 +162,13 @@ const Card = styled("div", {
     color: "$gray",
     fontSize: ".8rem",
     maxHeight: 120,
-    overflow: "auto",
+    overflowY: "auto",
+
+    "&::-webkit-scrollbar": {
+      display: "none",
+      scrollbarWidth: 0,
+      msOverflowStyle: "none",
+    },
   },
 
   button: {
@@ -177,10 +183,11 @@ const Card = styled("div", {
     outline: "none",
     cursor: "pointer",
     transition: "all .3s",
+    marginTop: "auto",
 
     "&:hover": {
       backgroundColor: "$white",
-      color: "$blue25",
+      color: "$blue2",
     },
   },
 });
