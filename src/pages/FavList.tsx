@@ -29,8 +29,6 @@ export const FavList = () => {
 
     storeMoviesId = storeMoviesId.filter((id) => id !== movieId.toString());
     window.localStorage.movies = storeMoviesId;
-
-    window.location.reload();
   }, []);
 
   return (
