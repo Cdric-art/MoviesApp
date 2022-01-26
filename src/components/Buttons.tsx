@@ -1,18 +1,28 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { ArrowDown, ArrowUp } from "../styles/components/Icons";
 import { styled } from "../styles/stitches.config";
 
-export const TopButton = () => {
+type Buttons = {
+  setSort: Dispatch<SetStateAction<string>>;
+};
+
+export const TopButton = ({ setSort }: Buttons) => {
   return (
-    <Button css={{ borderTopLeftRadius: 15, borderBottomLeftRadius: 15 }}>
+    <Button
+      onClick={() => setSort("goodToBad")}
+      css={{ borderTopLeftRadius: 15, borderBottomLeftRadius: 15 }}
+    >
       Top <ArrowUp />
     </Button>
   );
 };
 
-export const FlopButton = () => {
+export const FlopButton = ({ setSort }: Buttons) => {
   return (
-    <Button css={{ borderTopRightRadius: 15, borderBottomRightRadius: 15 }}>
+    <Button
+      onClick={() => setSort("badToGood")}
+      css={{ borderTopRightRadius: 15, borderBottomRightRadius: 15 }}
+    >
       <ArrowDown />
       Flop
     </Button>

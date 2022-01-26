@@ -14,6 +14,7 @@ export const Movies = () => {
   const [searchQuery, setSearchQuery] = useState<FormDataEntryValue | null>(
     null
   );
+  const [sortTopFlop, setSortTopFlop] = useState<string>("goodToBad");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
@@ -48,13 +49,21 @@ export const Movies = () => {
         </Form>
       </div>
       <Flex css={{ minWidth: 230 }}>
-        <TopButton />
-        <FlopButton />
+        <TopButton setSort={setSortTopFlop} />
+        <FlopButton setSort={setSortTopFlop} />
       </Flex>
       <Wrapper>
-        {moviesData.map((movie) => (
-          <MovieItem movie={movie} key={movie.id} />
-        ))}
+        {moviesData
+          .sort((a, b) => {
+            if (sortTopFlop === "badToGood") {
+              return a.vote_average - b.vote_average;
+            } else {
+              return b.vote_average - a.vote_average;
+            }
+          })
+          .map((movie) => (
+            <MovieItem movie={movie} key={movie.id} />
+          ))}
       </Wrapper>
     </Container>
   );
