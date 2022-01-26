@@ -4,13 +4,15 @@ import { styled } from "../styles/stitches.config";
 
 import defaultImg from "../assets/poster.jpg";
 import { useDateFormat } from "./useDateFormat";
+import { CrossIcon } from "../styles/components/Icons";
 
 type MovieItemProps = {
   movie: Movie;
   addStorage?: (movie: Movie) => void;
+  deleteFav?: (movieId: number) => void;
 };
 
-export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
+export const MovieItem = ({ movie, addStorage, deleteFav }: MovieItemProps) => {
   const urlPath = window.location.pathname;
 
   const [addFavoritesDisabled, setAddFavoritesDisabled] =
@@ -102,6 +104,9 @@ export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
 
   return (
     <Card>
+      {urlPath === "/favorites" && deleteFav && (
+        <CrossIcon deleteFav={deleteFav} movieId={movie.id} />
+      )}
       <img src={imgUrl} alt={movie.title} />
       <h2>{movie.title}</h2>
       {movie.release_date && (
@@ -135,6 +140,7 @@ export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
 };
 
 const Card = styled("div", {
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   backgroundColor: "$blue100",

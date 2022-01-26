@@ -22,7 +22,7 @@ export const Header = () => {
           </li>
           <li>
             <NavLink to={"/favorites"}>Mes favoris</NavLink>
-            {moviesID.length && <Pills>{moviesID.length}</Pills>}
+            {moviesID.length !== 0 && <Pills>{moviesID.length}</Pills>}
           </li>
         </ul>
       </Nav>

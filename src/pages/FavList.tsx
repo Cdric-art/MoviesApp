@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Header } from "../components/Header";
 import { Container } from "../styles/components/Container";
 import { Movie } from "../types/movie";
@@ -22,6 +22,17 @@ export const FavList = () => {
     });
   }, []);
 
+  const deleteFav = useCallback((movieId: number) => {
+    let storeMoviesId: string[] = window.localStorage.movies
+      ? window.localStorage.movies.split(",")
+      : [];
+
+    storeMoviesId = storeMoviesId.filter((id) => id !== movieId.toString());
+    window.localStorage.movies = storeMoviesId;
+
+    window.location.reload();
+  }, []);
+
   return (
     <Container>
       <Header />
@@ -32,7 +43,7 @@ export const FavList = () => {
           </Title>
           <WrapperMovies>
             {movies.map((movie) => (
-              <MovieItem movie={movie} key={movie.id} />
+              <MovieItem movie={movie} key={movie.id} deleteFav={deleteFav} />
             ))}
           </WrapperMovies>
         </>
