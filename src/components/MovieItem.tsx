@@ -11,6 +11,8 @@ type MovieItemProps = {
 };
 
 export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
+  const urlPath = window.location.pathname;
+
   const [addFavoritesDisabled, setAddFavoritesDisabled] =
     useState<boolean>(false);
 
@@ -27,9 +29,12 @@ export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
     : defaultImg;
 
   const genreFinder = () => {
+    let genres = movie.genre_ids
+      ? movie.genre_ids
+      : movie.genres.map((genre) => genre.id);
     let genreArr = [];
 
-    for (const id of movie.genre_ids) {
+    for (const id of genres) {
       switch (id) {
         case 28:
           genreArr.push(`Action`);
@@ -92,7 +97,7 @@ export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
           break;
       }
     }
-    return genreArr.map((genre) => <li key={genre}>{genre}</li>);
+    return genreArr.slice(0, 3).map((genre) => <li key={genre}>{genre}</li>);
   };
 
   return (
@@ -112,17 +117,19 @@ export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
           <p>{movie.overview}</p>
         </>
       )}
-      <button
-        disabled={addFavoritesDisabled}
-        onClick={() => {
-          if (addStorage) {
-            addStorage(movie);
-          }
-          setAddFavoritesDisabled(true);
-        }}
-      >
-        Ajouter aux favoris
-      </button>
+      {urlPath !== "/favorites" && (
+        <button
+          disabled={addFavoritesDisabled}
+          onClick={() => {
+            if (addStorage) {
+              addStorage(movie);
+            }
+            setAddFavoritesDisabled(true);
+          }}
+        >
+          Ajouter aux favoris
+        </button>
+      )}
     </Card>
   );
 };
@@ -140,13 +147,15 @@ const Card = styled("div", {
     marginBlock: "$space2",
     lineHeight: 1,
     letterSpacing: -1,
+    minHeight: 32,
   },
 
   img: {
     alignSelf: "center",
     width: "80%",
-    objectFit: "contain",
-    borderRadius: 12,
+    maxHeight: 250,
+    objectFit: "cover",
+    borderRadius: 15,
   },
 
   h5: {

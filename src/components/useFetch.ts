@@ -25,3 +25,16 @@ export const useFetchMovie = async () => {
 
   if (response.ok) return response.json();
 };
+
+export const useFetchMovieById = async (id: string) => {
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=fr-FR`;
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+  });
+
+  if (response.ok) return response.json();
+};
