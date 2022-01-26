@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { styled } from "../styles/stitches.config";
 
 export const Header = () => {
+  const [moviesID, setMoviesID] = useState<string[]>([]);
+
+  useEffect(() => {
+    const storeMoviesId = window.localStorage.getItem("movies")
+      ? window.localStorage.getItem("movies")!.split(",")
+      : [];
+
+    setMoviesID(storeMoviesId);
+  }, []);
+
   return (
     <header>
       <Nav>
@@ -12,6 +22,7 @@ export const Header = () => {
           </li>
           <li>
             <NavLink to={"/favorites"}>Mes favoris</NavLink>
+            {moviesID.length && <Pills>{moviesID.length}</Pills>}
           </li>
         </ul>
       </Nav>
@@ -27,6 +38,7 @@ const Nav = styled("nav", {
   },
 
   li: {
+    position: "relative",
     padding: "$space2 $space4",
   },
 
@@ -49,4 +61,21 @@ const Title = styled("h1", {
   fontSize: "3rem",
   letterSpacing: -1,
   textShadow: "2px 2px 2px $colors$blue25",
+});
+
+const Pills = styled("span", {
+  position: "absolute",
+  top: 0,
+  right: 5,
+  height: 20,
+  minWidth: 20,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  fontWeight: 600,
+  backgroundColor: "$yellow",
+  color: "$blue100",
+  borderRadius: "50%",
+  lineHeight: 0,
+  paddingBottom: 2,
 });

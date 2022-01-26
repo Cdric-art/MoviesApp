@@ -8,6 +8,7 @@ export const { styled, globalCss } = createStitches({
       blue25: "hsl(229, 73%, 61%)",
       blue50: "hsl(242, 33%, 19%)",
       blue100: "hsl(229, 76%, 10%)",
+      yellow: "hsl(49, 86%, 57%)",
     },
     fonts: {
       "*": "Source sans pro",
