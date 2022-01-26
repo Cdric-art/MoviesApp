@@ -6,6 +6,7 @@ import { FlopButton, TopButton } from "./Buttons";
 import { useFetchMovie, useFetchSearch } from "./useFetch";
 import { Movie } from "../types/movie";
 import { MovieItem } from "./MovieItem";
+import { WrapperMovies } from "../styles/components/WrapperMovies";
 
 export const Movies = () => {
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -15,14 +16,6 @@ export const Movies = () => {
     null
   );
   const [sortTopFlop, setSortTopFlop] = useState<string>("goodToBad");
-
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    if (formRef.current) {
-      const formData = new FormData(formRef.current);
-      setSearchQuery(formData.get("search"));
-    }
-  };
 
   useEffect(() => {
     if (searchQuery) {
@@ -35,6 +28,24 @@ export const Movies = () => {
       });
     }
   }, [searchQuery]);
+
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    if (formRef.current) {
+      const formData = new FormData(formRef.current);
+      setSearchQuery(formData.get("search"));
+    }
+  };
+
+  const addStorage = (movie: Movie) => {
+    const storeData = window.localStorage.movies
+      ? window.localStorage.movies.split(",")
+      : [];
+    if (!storeData.includes(movie.id.toString())) {
+      storeData.push(movie.id);
+      window.localStorage.movies = storeData;
+    }
+  };
 
   return (
     <Container position={"center"}>
@@ -52,7 +63,7 @@ export const Movies = () => {
         <TopButton setSort={setSortTopFlop} />
         <FlopButton setSort={setSortTopFlop} />
       </Flex>
-      <Wrapper>
+      <WrapperMovies>
         {moviesData
           .sort((a, b) => {
             if (sortTopFlop === "badToGood") {
@@ -62,9 +73,9 @@ export const Movies = () => {
             }
           })
           .map((movie) => (
-            <MovieItem movie={movie} key={movie.id} />
+            <MovieItem addStorage={addStorage} movie={movie} key={movie.id} />
           ))}
-      </Wrapper>
+      </WrapperMovies>
     </Container>
   );
 };
@@ -105,12 +116,4 @@ const Form = styled("form", {
       color: "$blue25",
     },
   },
-});
-const Wrapper = styled("div", {
-  display: "grid",
-  gridTemplateColumns: "repeat(auto-fill, 250px)",
-  justifyContent: "center",
-  width: "100%",
-  gridGap: "$space4",
-  marginTop: "$space8",
 });

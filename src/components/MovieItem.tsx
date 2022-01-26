@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Movie } from "../types/movie";
 import { styled } from "../styles/stitches.config";
 
@@ -7,9 +7,21 @@ import { useDateFormat } from "./useDateFormat";
 
 type MovieItemProps = {
   movie: Movie;
+  addStorage?: (movie: Movie) => void;
 };
 
-export const MovieItem = ({ movie }: MovieItemProps) => {
+export const MovieItem = ({ movie, addStorage }: MovieItemProps) => {
+  const [addFavoritesDisabled, setAddFavoritesDisabled] =
+    useState<boolean>(false);
+
+  useEffect(() => {
+    if (window.localStorage.movies) {
+      if (window.localStorage.movies.includes(movie.id)) {
+        setAddFavoritesDisabled(true);
+      }
+    }
+  }, []);
+
   const imgUrl = movie.poster_path
     ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : defaultImg;
@@ -100,7 +112,17 @@ export const MovieItem = ({ movie }: MovieItemProps) => {
           <p>{movie.overview}</p>
         </>
       )}
-      <button>Ajouter aux favoris</button>
+      <button
+        disabled={addFavoritesDisabled}
+        onClick={() => {
+          if (addStorage) {
+            addStorage(movie);
+          }
+          setAddFavoritesDisabled(true);
+        }}
+      >
+        Ajouter aux favoris
+      </button>
     </Card>
   );
 };
@@ -187,7 +209,11 @@ const Card = styled("div", {
 
     "&:hover": {
       backgroundColor: "$white",
-      color: "$blue2",
+      color: "$blue25",
+    },
+
+    "&:disabled": {
+      opacity: 0.3,
     },
   },
 });
